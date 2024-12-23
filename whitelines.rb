@@ -2,6 +2,11 @@ require 'cairo'
 
 # Device
 devices = {
+  github: {
+    width: 1920,
+    height: 256,
+    pixels_per_mm: 12,
+  },
   manta: {
     abbrev: 'a5',
     width: 1920,
@@ -113,7 +118,7 @@ devices.each do |device_name, specs|
         # Save to a PNG file
         output_file = "#{grid_size_mm}mm #{style} #{theme}.png"
         surface.write_to_png("#{device_name}/#{output_file}")
-        surface.write_to_png("all_devices/#{specs[:abbrev]}_#{output_file}")
+        surface.write_to_png("all_devices/#{specs[:abbrev]}_#{output_file}") unless specs[:abbrev].nil?
         puts "PNG file saved as #{output_file}"
       end
     end
