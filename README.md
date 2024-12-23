@@ -9,10 +9,9 @@ The templates are generated in a range of sizes from 2mm spacing to 10mm spacing
 **Please note that the greys you see on screen are not completely representative of what you see on the device**
 
 ## Download the collection (zip of all variants)
-**Right-click and "Save link as..."**
-- [Manta](./downloads/manta_1_0.zip)
-- [Nomad](./downloads/nomad_1_0.zip)
-- [Both devices](./downloads/all_devices_1_0.zip) (Non-conflicting filenames for synced devices)
+- [Manta](https://github.com/dangerous/supernote/raw/refs/heads/main/downloads/manta_1_0.zip)
+- [Nomad](https://github.com/dangerous/supernote/raw/refs/heads/main/downloads/nomad_1_0.zip)
+- [Both devices](https://github.com/dangerous/supernote/raw/refs/heads/main/downloads/all_devices_1_0.zip) (Non-conflicting filenames for synced devices)
 
 ## Previews
 The following styles are included:
