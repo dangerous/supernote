@@ -38,7 +38,7 @@ colors = {
     line_color = colors[:line_color]
     line_width = colors[:line_width]
 
-    [2, 3, 4, 5].each do |grid_size_mm|
+    (2..10).to_a.each do |grid_size_mm|
       square_size = pixels_per_mm * grid_size_mm
       background_color = [background, background, background]
       dot_color_color = [dot_color, dot_color, dot_color]
@@ -96,7 +96,7 @@ colors = {
 
       # Save to a PNG file
       output_file = "#{grid_size_mm}mm #{style} #{theme}.png"
-      surface.write_to_png(output_file)
+      surface.write_to_png("generated_pngs/#{output_file}")
       puts "PNG file saved as #{output_file}"
     end
   end
