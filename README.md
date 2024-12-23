@@ -6,8 +6,6 @@ The script currently generates files optimised for the Supernote Manta (1920 * 2
 
 The templates are generated in a range of sizes from 2mm spacing to 10mm spacing.
 
-**Please note that the greys you see on screen are not completely representative of what you see on the device**
-
 ## Download the collection (zip of all variants)
 - [Manta](https://github.com/dangerous/supernote/raw/refs/heads/main/downloads/manta_1_0.zip)
 - [Nomad](https://github.com/dangerous/supernote/raw/refs/heads/main/downloads/nomad_1_0.zip)
@@ -15,6 +13,8 @@ The templates are generated in a range of sizes from 2mm spacing to 10mm spacing
 
 ## Previews
 The following styles are included:
+
+**Please note that the greys you see on screen are not completely representative of what you see on the device**
 
 ### Dot grid
 ![](./img/4mm_dot_grid_plain.png)
