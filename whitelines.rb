@@ -1,9 +1,20 @@
 require 'cairo'
 
 # Device
-width = 1920
-height = 2560
-pixels_per_mm = 12
+devices = {
+  manta: {
+    abbrev: 'a5',
+    width: 1920,
+    height: 2560,
+    pixels_per_mm: 12,
+  },
+  nomad: {
+    abbrev: 'a6',
+    width: 1404,
+    height: 1872,
+    pixels_per_mm: 12,
+  }
+}
 
 # settings
 colors = {
@@ -30,74 +41,81 @@ colors = {
   }
 }
 
-['dot grid', 'lines', 'grid'].each do |style|
-  colors.each do |theme, colors|
-    background = colors[:background]
-    dot_color = colors[:dot_color]
-    dot_radius = colors[:dot_radius]
-    line_color = colors[:line_color]
-    line_width = colors[:line_width]
+devices.each do |device_name, specs|
+  width = specs[:width]
+  height = specs[:height]
+  pixels_per_mm = specs[:pixels_per_mm]
 
-    (2..10).to_a.each do |grid_size_mm|
-      square_size = pixels_per_mm * grid_size_mm
-      background_color = [background, background, background]
-      dot_color_color = [dot_color, dot_color, dot_color]
-      line_color_color = [line_color, line_color, line_color]
+  ['dot grid', 'lines', 'grid'].each do |style|
+    colors.each do |theme, colors|
+      background = colors[:background]
+      dot_color = colors[:dot_color]
+      dot_radius = colors[:dot_radius]
+      line_color = colors[:line_color]
+      line_width = colors[:line_width]
 
-      rows = height % square_size != 0 ? height / square_size : height / square_size - 1
-      columns = width % square_size != 0 ? width / square_size : width / square_size - 1
+      (2..10).to_a.each do |grid_size_mm|
+        square_size = pixels_per_mm * grid_size_mm
+        background_color = [background, background, background]
+        dot_color_color = [dot_color, dot_color, dot_color]
+        line_color_color = [line_color, line_color, line_color]
 
-      offset_x = (width - (square_size * columns)) / 2
-      offset_y = (height - (square_size * rows)) / 2
+        rows = height % square_size != 0 ? height / square_size : height / square_size - 1
+        columns = width % square_size != 0 ? width / square_size : width / square_size - 1
 
-      # Create a PNG surface
-      surface = Cairo::ImageSurface.new(:argb32, width, height)
-      context = Cairo::Context.new(surface)
+        offset_x = (width - (square_size * columns)) / 2
+        offset_y = (height - (square_size * rows)) / 2
 
-      # Fill the background
-      context.set_source_rgb(*background_color)
-      context.paint
+        # Create a PNG surface
+        surface = Cairo::ImageSurface.new(:argb32, width, height)
+        context = Cairo::Context.new(surface)
 
-      if (style == 'dot grid')
-        context.set_source_rgb(*dot_color_color)
+        # Fill the background
+        context.set_source_rgb(*background_color)
+        context.paint
 
-        (rows + 1).times do |row|
-          (columns + 1).times do |col|
-            x = offset_x + col * square_size
+        if (style == 'dot grid')
+          context.set_source_rgb(*dot_color_color)
+
+          (rows + 1).times do |row|
+            (columns + 1).times do |col|
+              x = offset_x + col * square_size
+              y = offset_y + row * square_size
+              context.arc(x, y, dot_radius, 0, 2 * Math::PI) # Draw a circle (dot)
+              context.fill # Fill the dot
+            end
+          end
+        else
+          # Draw the grid
+          context.set_source_rgb(*line_color_color)
+          context.set_line_width(line_width)
+
+          # Draw vertical grid lines
+          if (style == 'grid')
+            (columns + 1).times do |col|
+              x = offset_x + col * square_size
+              context.move_to(x, 0)            # Start at the top edge
+              context.line_to(x, height)       # Go to the bottom edge
+            end
+          end
+
+          # Draw horizontal grid lines
+          (rows + 1).times do |row|
             y = offset_y + row * square_size
-            context.arc(x, y, dot_radius, 0, 2 * Math::PI) # Draw a circle (dot)
-            context.fill # Fill the dot
+            context.move_to(0, y)            # Start at the left edge
+            context.line_to(width, y)        # Go to the right edge
           end
-        end
-      else
-        # Draw the grid
-        context.set_source_rgb(*line_color_color)
-        context.set_line_width(line_width)
 
-        # Draw vertical grid lines
-        if (style == 'grid')
-          (columns + 1).times do |col|
-            x = offset_x + col * square_size
-            context.move_to(x, 0)            # Start at the top edge
-            context.line_to(x, height)       # Go to the bottom edge
-          end
+          # Stroke the grid lines
+          context.stroke
         end
 
-        # Draw horizontal grid lines
-        (rows + 1).times do |row|
-          y = offset_y + row * square_size
-          context.move_to(0, y)            # Start at the left edge
-          context.line_to(width, y)        # Go to the right edge
-        end
-
-        # Stroke the grid lines
-        context.stroke
+        # Save to a PNG file
+        output_file = "#{grid_size_mm}mm #{style} #{theme}.png"
+        surface.write_to_png("#{device_name}/#{output_file}")
+        surface.write_to_png("all_devices/#{specs[:abbrev]}_#{output_file}")
+        puts "PNG file saved as #{output_file}"
       end
-
-      # Save to a PNG file
-      output_file = "#{grid_size_mm}mm #{style} #{theme}.png"
-      surface.write_to_png("generated_pngs/#{output_file}")
-      puts "PNG file saved as #{output_file}"
     end
   end
 end
