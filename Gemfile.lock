@@ -1,0 +1,24 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    cairo (1.17.14)
+      native-package-installer (>= 1.0.3)
+      pkg-config (>= 1.2.2)
+      red-colors
+    json (2.9.1)
+    matrix (0.4.2)
+    native-package-installer (1.1.9)
+    pkg-config (1.5.8)
+    red-colors (0.4.0)
+      json
+      matrix
+
+PLATFORMS
+  arm64-darwin-23
+  ruby
+
+DEPENDENCIES
+  cairo
+
+BUNDLED WITH
+   2.5.16
