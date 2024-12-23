@@ -8,11 +8,12 @@ The templates are generated in a range of sizes from 2mm spacing to 10mm spacing
 
 **Please note that the greys you see on screen are not completely representative of what you see on the device**
 
-### Download the collection
+## Download the collection
 [Manta](./downloads/manta_1_0.zip)
 [Nomad](./downloads/nomad_1_0.zip)
 [Both devices](./downloads/all_devices_1_0.zip) (Non-conflicting filenames for synced devices)
 
+## Previews
 The following styles are included:
 
 ### Dot grid
@@ -41,3 +42,7 @@ The following styles are included:
 
 ### Lines white (darker variant)
 ![](./img/4mm_lines_white_dark.png)
+
+
+## Development notes
+This is in no way production quality code, don't judge me on it.
